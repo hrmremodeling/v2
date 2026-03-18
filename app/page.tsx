@@ -439,9 +439,12 @@ export default function HRMWebsitePreview() {
               <p className="mt-4 text-sm leading-7 text-neutral-600">
                 Your Google Reviews widget will be installed here on the live site so reviews update automatically.
               </p>
-              <div className="mt-6 rounded-2xl border border-neutral-200 bg-neutral-50 p-4 text-center text-sm text-neutral-600">
-                Google Reviews widget area
-              </div>
+              <div className="mt-6 rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
+  <div
+    className="elfsight-app-3c9e474f-8be7-470a-b007-3bf725c80b2d"
+    data-elfsight-app-lazy
+  ></div>
+</div>
               <div className="mt-4 flex flex-wrap gap-3">
                 <Button className="rounded-xl bg-amber-600 px-5 py-4 text-sm font-semibold text-white hover:bg-amber-700">Read Our Reviews</Button>
                 <Button variant="secondary" className="rounded-xl border border-neutral-300 bg-white px-5 py-4 text-sm font-semibold text-neutral-900 hover:bg-neutral-50">Leave a Review</Button>
