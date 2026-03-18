@@ -129,6 +129,16 @@ function PhotoPlaceholder({ label, tall = false }: { label: string; tall?: boole
 }
 
 export default function HRMWebsitePreview() {
+    useEffect(() => {
+    const existing = document.querySelector('script[data-elfsight="true"]');
+    if (existing) return;
+
+    const script = document.createElement("script");
+    script.src = "https://elfsightcdn.com/platform.js";
+    script.async = true;
+    script.setAttribute("data-elfsight", "true");
+    document.body.appendChild(script);
+  }, []);
   return (
     <div className="min-h-screen bg-white text-neutral-900">
       <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur">
