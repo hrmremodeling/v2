@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";;
+import { Badge } from "@/components/ui/badge";
 import {
   Bath,
   Building2,
@@ -77,6 +77,7 @@ const serviceAreas = [
   "South Windsor",
   "Glastonbury",
   "Rockville",
+  "Surrounding Towns",
 ];
 
 const kitchenFeatures = [
@@ -109,7 +110,11 @@ const projectGalleries = [
   },
   {
     title: "Basement Finish",
-    images: ["/images/basement1.jpg", "/images/basement2.jpg"],
+    images: ["/images/basement1.jpg", "/images/basement2.jpg", "/images/basement3.jpg"],
+  },
+  {
+    title: "Deck Project",
+    images: ["/images/deck1.jpg", "/images/deck2.jpg", "/images/deck3.jpg"],
   },
 ];
 
@@ -128,8 +133,56 @@ function PhotoPlaceholder({ label, tall = false }: { label: string; tall?: boole
   );
 }
 
+function ProjectGalleryCard({
+  project,
+  isOpen,
+  onToggle,
+}: {
+  project: { title: string; images: string[] };
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  return (
+    <Card className="overflow-hidden rounded-[1.5rem] border border-neutral-200 shadow-sm">
+      <CardContent className="p-4">
+        <button
+          type="button"
+          onClick={onToggle}
+          className="w-full text-left"
+        >
+          <div className="mb-3 flex items-center justify-between gap-3">
+            <div className="text-sm font-semibold text-neutral-900">{project.title}</div>
+            <span className="text-xs font-medium text-neutral-500">
+              {isOpen ? "Hide Photos" : "View Gallery"}
+            </span>
+          </div>
+          <img
+            src={project.images[0]}
+            alt={project.title}
+            className="h-56 w-full rounded-xl border border-neutral-200 object-cover"
+          />
+        </button>
+
+        {isOpen && project.images.length > 1 && (
+          <div className="mt-3 grid grid-cols-2 gap-3">
+            {project.images.slice(1).map((img, index) => (
+              <img
+                key={index}
+                src={img}
+                alt={`${project.title} ${index + 2}`}
+                className="h-28 w-full rounded-xl border border-neutral-200 object-cover"
+              />
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+}
+
 export default function HRMWebsitePreview() {
-    useEffect(() => {
+  const [openProject, setOpenProject] = useState<string | null>(null);
+  useEffect(() => {
     const existing = document.querySelector('script[data-elfsight="true"]');
     if (existing) return;
 
@@ -281,47 +334,20 @@ export default function HRMWebsitePreview() {
           </p>
         </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-          <Card className="overflow-hidden rounded-[1.75rem] shadow-sm">
-            <div className="p-3"><PhotoPlaceholder label="Kitchen Project Photo" /></div>
-            <CardContent className="p-6 pt-2">
-              <Badge variant="secondary" className="rounded-full">High-Value Projects</Badge>
-              <h3 className="mt-3 text-xl font-semibold">Kitchen Remodeling</h3>
-              <p className="mt-3 text-sm leading-6 text-neutral-600">Custom cabinetry, countertops, backsplash, islands, and layout improvements built around how homeowners actually use the space.</p>
-            </CardContent>
-          </Card>
+        <div className="mt-10 grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
+          <div className="grid gap-5 sm:grid-cols-2">
+            {projectGalleries.map((project) => (
+              <ProjectGalleryCard
+                key={project.title}
+                project={project}
+                isOpen={openProject === project.title}
+                onToggle={() =>
+                  setOpenProject(openProject === project.title ? null : project.title)
+                }
+              />
+            ))}
+          </div>
 
-          <Card className="overflow-hidden rounded-[1.75rem] shadow-sm">
-            <div className="p-3"><PhotoPlaceholder label="Bathroom Project Photo" /></div>
-            <CardContent className="p-6 pt-2">
-              <Badge variant="secondary" className="rounded-full">Bathrooms &amp; Showers</Badge>
-              <h3 className="mt-3 text-xl font-semibold">Bathroom Remodeling</h3>
-              <p className="mt-3 text-sm leading-6 text-neutral-600">Tile showers, vanities, frameless glass, waterproof systems, and clean modern finishes completed with careful installation.</p>
-            </CardContent>
-          </Card>
-
-          <Card className="overflow-hidden rounded-[1.75rem] shadow-sm">
-            <div className="p-3"><PhotoPlaceholder label="Basement Project Photo" /></div>
-            <CardContent className="p-6 pt-2">
-              <Badge variant="secondary" className="rounded-full">Great Winter Work</Badge>
-              <h3 className="mt-3 text-xl font-semibold">Basement Finishing</h3>
-              <p className="mt-3 text-sm leading-6 text-neutral-600">Family rooms, offices, guest areas, built-ins, and full lower-level transformations that add usable living space and value.</p>
-            </CardContent>
-          </Card>
-
-          <Card className="overflow-hidden rounded-[1.75rem] shadow-sm">
-            <div className="p-3"><PhotoPlaceholder label="Deck Project Photo" /></div>
-            <CardContent className="p-6 pt-2">
-              <Badge variant="secondary" className="rounded-full">Outdoor Living</Badge>
-              <h3 className="mt-3 text-xl font-semibold">Deck Construction</h3>
-              <p className="mt-3 text-sm leading-6 text-neutral-600">Composite and pressure-treated decks, custom stairs, rail systems, and outdoor living spaces designed to last.</p>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      <section className="bg-white px-6 py-16">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[0.95fr_1.05fr]">
           <Card className="rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
             <CardContent className="p-8">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Real Projects From Local Homes</p>
@@ -339,7 +365,7 @@ export default function HRMWebsitePreview() {
                           key={index}
                           src={img}
                           alt={project.title}
-                          className="rounded-xl object-cover w-full h-32 border border-neutral-200"
+                          className="h-32 w-full rounded-xl border border-neutral-200 object-cover"
                         />
                       ))}
                     </div>
@@ -348,7 +374,11 @@ export default function HRMWebsitePreview() {
               </div>
             </CardContent>
           </Card>
+        </div>
+      </section>
 
+      <section className="bg-white px-6 py-16">
+        <div className="mx-auto max-w-7xl">
           <Card id="about" className="rounded-[2rem] border border-neutral-200 shadow-sm">
             <CardContent className="p-8">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">About HRM</p>
@@ -369,88 +399,13 @@ export default function HRMWebsitePreview() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Project Gallery</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">More Real Projects</h2>
-            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-              {[
-                "Kitchen Project",
-                "Bathroom Project",
-                "Basement Project",
-                "Deck Project",
-                "Windows & Doors",
-                "Custom Detail",
-              ].map((item) => (
-                <Card key={item} className="overflow-hidden rounded-[1.5rem] border border-neutral-200 shadow-sm">
-                  <div className="p-3"><PhotoPlaceholder label={item} /></div>
-                  <CardContent className="px-5 pb-5 pt-0">
-                    <div className="text-xs font-medium text-neutral-600">{item}</div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
+      <section className="bg-neutral-100/70 px-6 py-10 text-neutral-900">
+        <div className="mx-auto max-w-7xl px-6">
+          <div className="text-center">
+            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
+              Honesty • Integrity • Quality Craftsmanship
+            </h2>
           </div>
-
-          <Card className="rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
-            <CardContent className="p-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Why Our Projects Stand Out</p>
-              <h3 className="mt-3 text-3xl font-bold text-neutral-900">Why Homeowners Choose HRM</h3>
-              <p className="mt-5 text-sm leading-7 text-neutral-600">
-                Every project we take on is built with the goal of creating a space that works better for your family and lasts for years. We focus on thoughtful design, careful installation, and clear communication so homeowners feel confident from start to finish.
-              </p>
-              <div className="mt-8 grid gap-4 sm:grid-cols-2">
-                {[
-                  "Over 25 years of hands-on residential remodeling experience",
-                  "Small, personable crew that homeowners work with directly",
-                  "Full-service contractor handling projects from start to finish",
-                  "Projects built with careful craftsmanship and attention to detail",
-                  "Clear communication and dependable scheduling",
-                  "Designs focused on function, durability, and long-term home value",
-                ].map((point) => (
-                  <div key={point} className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
-                    <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
-                    <span>{point}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      <section className="bg-neutral-100/70 px-6 py-16 text-neutral-900">
-        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2">
-          <Card className="rounded-[2rem] border border-neutral-200 bg-white text-neutral-900 shadow-sm">
-            <CardContent className="p-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Experience, Integrity, Craftsmanship</p>
-              <h2 className="mt-3 text-3xl font-bold">Dependable service from a contractor you can trust</h2>
-              <p className="mt-4 text-sm leading-7 text-neutral-600">
-                Homeowners want to know they are hiring someone who will communicate clearly, respect their home, and complete the project the right way. That is the standard HRM Building &amp; Remodeling brings to every job.
-              </p>
-            </CardContent>
-          </Card>
-
-          <Card className="rounded-[2rem] border border-neutral-200 bg-white text-neutral-900 shadow-sm">
-            <CardContent className="p-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Google Reviews</p>
-              <h2 className="mt-3 text-3xl font-bold">What homeowners are saying</h2>
-              <p className="mt-4 text-sm leading-7 text-neutral-600">
-                Your Google Reviews widget will be installed here on the live site so reviews update automatically.
-              </p>
-              <div className="mt-6 rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-  <div
-    className="elfsight-app-3c9e474f-8be7-470a-b007-3bf725c80b2d"
-    data-elfsight-app-lazy
-  ></div>
-</div>
-              <div className="mt-4 flex flex-wrap gap-3">
-                <Button className="rounded-xl bg-amber-600 px-5 py-4 text-sm font-semibold text-white hover:bg-amber-700">Read Our Reviews</Button>
-                <Button variant="secondary" className="rounded-xl border border-neutral-300 bg-white px-5 py-4 text-sm font-semibold text-neutral-900 hover:bg-neutral-50">Leave a Review</Button>
-              </div>
-            </CardContent>
-          </Card>
         </div>
       </section>
 
@@ -492,7 +447,7 @@ export default function HRMWebsitePreview() {
           </div>
 
           <div>
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Service Area</div>
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Service Area & Surrounding Communities</div>
             <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm text-neutral-700">
               {serviceAreas.map((area) => (
                 <div key={area} className="flex items-center gap-2">
