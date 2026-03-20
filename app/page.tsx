@@ -210,12 +210,12 @@ export default function HRMWebsitePreview() {
               We handle kitchen remodeling, bathroom renovations, basement finishing, deck construction, and window and door installation. Financing options are available to help make your project more manageable.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button asChild className="rounded-xl bg-amber-600 px-6 py-5 text-base font-semibold text-white hover:bg-amber-700">
-                <a href="#contact">Request a Free Estimate</a>
-              </Button>
-              <Button asChild variant="secondary" className="rounded-xl border border-white/70 bg-transparent px-6 py-5 text-base font-semibold text-white hover:bg-white/10">
-                <a href="#projects">View Our Projects</a>
-              </Button>
+              <a href="#contact" className="inline-flex rounded-xl bg-amber-600 px-6 py-5 text-base font-semibold text-white hover:bg-amber-700">
+                Request a Free Estimate
+              </a>
+              <a href="#projects" className="inline-flex rounded-xl border border-white/70 bg-transparent px-6 py-5 text-base font-semibold text-white hover:bg-white/10">
+                View Our Projects
+              </a>
             </div>
           </div>
 
@@ -444,9 +444,9 @@ export default function HRMWebsitePreview() {
                 Serving Vernon, Ellington, Manchester, Tolland, South Windsor, Glastonbury, Rockville, and surrounding communities. Reach out today to request a free estimate and start planning your next project.
               </p>
             </div>
-            <Button asChild className="rounded-2xl bg-amber-600 px-6 py-6 text-base font-semibold text-white hover:bg-amber-700">
-              <a href="mailto:HRM.remodeling@gmail.com">Request a Free Estimate</a>
-            </Button>
+            <a href="mailto:HRM.remodeling@gmail.com" className="inline-flex rounded-2xl bg-amber-600 px-6 py-6 text-base font-semibold text-white hover:bg-amber-700">
+              Request a Free Estimate
+            </a>
           </div>
         </div>
       </section>
