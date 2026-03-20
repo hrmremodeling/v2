@@ -16,7 +16,22 @@ import {
   MapPin,
   Phone,
   Wallet,
+  X,
 } from "lucide-react";
+
+type ProjectCategory = {
+  title: string;
+  shortTitle: string;
+  description: string;
+  cover: string;
+  images: string[];
+};
+
+function buildGalleryImages(folder: string, prefix: string, count: number) {
+  return Array.from({ length: count }, (_, i) =>
+    `/images/projects/${folder}/${prefix}-${String(i + 1).padStart(2, "0")}.jpg`
+  );
+}
 
 const services = [
   {
@@ -77,7 +92,6 @@ const serviceAreas = [
   "South Windsor",
   "Glastonbury",
   "Rockville",
-  "Surrounding Towns",
 ];
 
 const kitchenFeatures = [
@@ -99,89 +113,54 @@ const bathFeatures = [
   "Faster turnaround",
 ];
 
-const projectGalleries = [
+const projectCategories: ProjectCategory[] = [
   {
-    title: "Kitchen Remodel",
-    images: ["/images/kitchen1.jpg", "/images/kitchen2.jpg", "/images/kitchen3.jpg"],
+    title: "Kitchen Remodeling",
+    shortTitle: "Kitchens",
+    description:
+      "Browse completed kitchen remodels featuring cabinetry, countertops, backsplash tile, lighting, custom storage, and layout improvements.",
+    cover: "/images/projects/kitchens/kitchen-cover.jpg",
+    images: buildGalleryImages("kitchens", "kitchen", 30),
   },
   {
-    title: "Bathroom Renovation",
-    images: ["/images/bathroom1.jpg", "/images/bathroom2.jpg", "/images/bathroom3.jpg"],
+    title: "Bathroom Remodeling",
+    shortTitle: "Bathrooms",
+    description:
+      "See bathroom renovations with walk-in showers, tub surrounds, vanities, tilework, flooring, and clean modern finishes.",
+    cover: "/images/projects/bathrooms/bathroom-01.jpg",
+    images: buildGalleryImages("bathrooms", "bathroom", 15),
   },
   {
-    title: "Basement Finish",
-    images: ["/images/basement1.jpg", "/images/basement2.jpg", "/images/basement3.jpg"],
+    title: "Basement Finishing",
+    shortTitle: "Basements",
+    description:
+      "Explore finished basements with open layouts, custom stairs, built-ins, storage, wet bars, laundry spaces, and flexible family living areas.",
+    cover: "/images/projects/basements/basement-01.jpg",
+    images: buildGalleryImages("basements", "basement", 12),
   },
   {
-    title: "Deck Project",
-    images: ["/images/deck1.jpg", "/images/deck2.jpg", "/images/deck3.jpg"],
+    title: "Decks & Exterior",
+    shortTitle: "Decks",
+    description:
+      "View deck construction and exterior improvement work built for long-term performance, clean detailing, and everyday outdoor use.",
+    cover: "/images/projects/decks/deck-01.jpg",
+    images: buildGalleryImages("decks", "deck", 15),
   },
 ];
 
-function PhotoPlaceholder({ label, tall = false }: { label: string; tall?: boolean }) {
+function GalleryImage({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
   return (
-    <div
-      className={`relative overflow-hidden rounded-[1.5rem] border border-neutral-200 bg-gradient-to-br from-neutral-200 via-neutral-100 to-white ${
-        tall ? "min-h-[340px]" : "min-h-[220px]"
-      }`}
-    >
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.9),_transparent_35%)]" />
-      <div className="absolute bottom-4 left-4 rounded-xl bg-white/90 px-3 py-2 text-xs font-medium text-neutral-700 shadow-sm">
-        {label}
-      </div>
-    </div>
-  );
-}
-
-function ProjectGalleryCard({
-  project,
-  isOpen,
-  onToggle,
-}: {
-  project: { title: string; images: string[] };
-  isOpen: boolean;
-  onToggle: () => void;
-}) {
-  return (
-    <Card className="overflow-hidden rounded-[1.5rem] border border-neutral-200 shadow-sm">
-      <CardContent className="p-4">
-        <button
-          type="button"
-          onClick={onToggle}
-          className="w-full text-left"
-        >
-          <div className="mb-3 flex items-center justify-between gap-3">
-            <div className="text-sm font-semibold text-neutral-900">{project.title}</div>
-            <span className="text-xs font-medium text-neutral-500">
-              {isOpen ? "Hide Photos" : "View Gallery"}
-            </span>
-          </div>
-          <img
-            src={project.images[0]}
-            alt={project.title}
-            className="h-56 w-full rounded-xl border border-neutral-200 object-cover"
-          />
-        </button>
-
-        {isOpen && project.images.length > 1 && (
-          <div className="mt-3 grid grid-cols-2 gap-3">
-            {project.images.slice(1).map((img, index) => (
-              <img
-                key={index}
-                src={img}
-                alt={`${project.title} ${index + 2}`}
-                className="h-28 w-full rounded-xl border border-neutral-200 object-cover"
-              />
-            ))}
-          </div>
-        )}
-      </CardContent>
-    </Card>
+    <img
+      src={src}
+      alt={alt}
+      className={`h-full w-full rounded-[1.5rem] object-cover bg-neutral-100 ${className}`}
+    />
   );
 }
 
 export default function HRMWebsitePreview() {
-  const [openProject, setOpenProject] = useState<string | null>(null);
+  const [activeGallery, setActiveGallery] = useState<ProjectCategory | null>(null);
+
   useEffect(() => {
     const existing = document.querySelector('script[data-elfsight="true"]');
     if (existing) return;
@@ -192,14 +171,20 @@ export default function HRMWebsitePreview() {
     script.setAttribute("data-elfsight", "true");
     document.body.appendChild(script);
   }, []);
+
+  const kitchenGallery = projectCategories[0];
+  const bathroomGallery = projectCategories[1];
+  const basementGallery = projectCategories[2];
+  const deckGallery = projectCategories[3];
+
   return (
     <div className="min-h-screen bg-white text-neutral-900">
       <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <div>
-              <div className="text-lg font-bold tracking-tight">HRM Building & Remodeling LLC</div>
-              <div className="text-sm text-neutral-500">Vernon, CT</div>
-            </div>
+            <div className="text-lg font-bold tracking-tight">HRM Building & Remodeling LLC</div>
+            <div className="text-sm text-neutral-500">Vernon, CT</div>
+          </div>
           <nav className="hidden items-center gap-6 text-sm md:flex">
             <a href="#services" className="hover:text-black">Services</a>
             <a href="#projects" className="hover:text-black">Projects</a>
@@ -225,20 +210,26 @@ export default function HRMWebsitePreview() {
               We handle kitchen remodeling, bathroom renovations, basement finishing, deck construction, and window and door installation. Financing options are available to help make your project more manageable.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <Button className="rounded-xl bg-amber-600 px-6 py-5 text-base font-semibold text-white hover:bg-amber-700">
-                Request a Free Estimate
+              <Button asChild className="rounded-xl bg-amber-600 px-6 py-5 text-base font-semibold text-white hover:bg-amber-700">
+                <a href="#contact">Request a Free Estimate</a>
               </Button>
-              <Button variant="secondary" className="rounded-xl border border-white/70 bg-transparent px-6 py-5 text-base font-semibold text-white hover:bg-white/10">
-                View Our Projects
+              <Button asChild variant="secondary" className="rounded-xl border border-white/70 bg-transparent px-6 py-5 text-base font-semibold text-white hover:bg-white/10">
+                <a href="#projects">View Our Projects</a>
               </Button>
             </div>
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <PhotoPlaceholder label="Hero Project Photo" tall />
+            <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5">
+              <GalleryImage src={kitchenGallery.cover} alt="Featured kitchen remodeling project" className="min-h-[340px] rounded-none" />
+            </div>
             <div className="grid gap-4">
-              <PhotoPlaceholder label="Kitchen / Bath Photo" />
-              <PhotoPlaceholder label="Deck / Basement Photo" />
+              <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5">
+                <GalleryImage src={bathroomGallery.cover} alt="Featured bathroom remodeling project" className="min-h-[162px] rounded-none" />
+              </div>
+              <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5">
+                <GalleryImage src={deckGallery.cover} alt="Featured deck project" className="min-h-[162px] rounded-none" />
+              </div>
             </div>
           </div>
         </div>
@@ -324,62 +315,38 @@ export default function HRMWebsitePreview() {
       </section>
 
       <section id="projects" className="mx-auto max-w-7xl px-6 py-16">
-        <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Featured Work</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Recent Remodeling Projects</h2>
-          </div>
-          <p className="max-w-2xl text-sm leading-6 text-neutral-600">
-            Browse recent kitchen, bathroom, basement, deck, window, and door projects from HRM Building &amp; Remodeling LLC.
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Featured Work</p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Recent Remodeling Projects</h2>
+          <p className="mt-4 text-neutral-600">
+            Browse kitchens, bathrooms, basements, and decks from real projects. Click any category to open the gallery.
           </p>
         </div>
 
-        <div className="mt-10 grid gap-8 lg:grid-cols-[1.05fr_0.95fr]">
-          <div className="grid gap-5 sm:grid-cols-2">
-            {projectGalleries.map((project) => (
-              <ProjectGalleryCard
-                key={project.title}
-                project={project}
-                isOpen={openProject === project.title}
-                onToggle={() =>
-                  setOpenProject(openProject === project.title ? null : project.title)
-                }
-              />
-            ))}
-          </div>
-
-          <Card className="rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
-            <CardContent className="p-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Real Projects From Local Homes</p>
-              <h2 className="mt-3 text-3xl font-bold text-neutral-900">Before &amp; After Remodeling</h2>
-              <p className="mt-4 text-sm leading-7 text-neutral-600">
-                Real before-and-after projects show the kind of transformation possible in your own home. These examples feature kitchens, bathrooms, basements, and decks completed for homeowners throughout the local area.
-              </p>
-              <div className="mt-6 grid gap-4">
-                {projectGalleries.map((project) => (
-                  <div key={project.title} className="rounded-2xl border border-neutral-200 bg-neutral-50 p-4">
-                    <div className="mb-3 text-sm font-semibold text-neutral-900">{project.title}</div>
-                    <div className="grid grid-cols-2 gap-3">
-                      {project.images.map((img, index) => (
-                        <img
-                          key={index}
-                          src={img}
-                          alt={project.title}
-                          className="h-32 w-full rounded-xl border border-neutral-200 object-cover"
-                        />
-                      ))}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
+        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {projectCategories.map((project) => (
+            <Card
+              key={project.title}
+              className="cursor-pointer overflow-hidden rounded-[1.75rem] border border-neutral-200 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              onClick={() => setActiveGallery(project)}
+            >
+              <GalleryImage src={project.cover} alt={project.title} className="h-64 rounded-none" />
+              <CardContent className="p-6">
+                <Badge variant="secondary" className="rounded-full">High-Value Projects</Badge>
+                <h3 className="mt-4 text-xl font-semibold">{project.title}</h3>
+                <p className="mt-3 text-sm leading-6 text-neutral-600">{project.description}</p>
+                <button className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900">
+                  Open gallery <ChevronRight size={16} />
+                </button>
+              </CardContent>
+            </Card>
+          ))}
         </div>
       </section>
 
-      <section className="bg-white px-6 py-16">
+      <section id="about" className="bg-neutral-100/70 px-6 py-16">
         <div className="mx-auto max-w-7xl">
-          <Card id="about" className="rounded-[2rem] border border-neutral-200 shadow-sm">
+          <Card className="rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
             <CardContent className="p-8">
               <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">About HRM</p>
               <h2 className="mt-3 text-3xl font-bold">A local company built on honesty, integrity, and craftsmanship</h2>
@@ -399,12 +366,68 @@ export default function HRMWebsitePreview() {
         </div>
       </section>
 
-      <section className="bg-neutral-100/70 px-6 py-10 text-neutral-900">
-        <div className="mx-auto max-w-7xl px-6">
-          <div className="text-center">
-            <h2 className="text-2xl md:text-3xl font-bold tracking-tight">
-              Honesty • Integrity • Quality Craftsmanship
-            </h2>
+      <section className="mx-auto max-w-7xl px-6 py-16">
+        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Why Our Projects Stand Out</p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Why Homeowners Choose HRM</h2>
+            <p className="mt-5 text-sm leading-7 text-neutral-600">
+              Every project we take on is built with the goal of creating a space that works better for your family and lasts for years. We focus on thoughtful design, careful installation, and clear communication so homeowners feel confident from start to finish.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {[
+                "Over 25 years of hands-on residential remodeling experience",
+                "Small, personable crew that homeowners work with directly",
+                "Full-service contractor handling projects from start to finish",
+                "Projects built with careful craftsmanship and attention to detail",
+                "Clear communication and dependable scheduling",
+                "Designs focused on function, durability, and long-term home value",
+              ].map((point) => (
+                <div key={point} className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
+                  <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
+                  <span>{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-neutral-200 bg-neutral-50 p-8">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Honesty • Integrity • Quality Craftsmanship</p>
+            <h3 className="mt-3 text-3xl font-bold text-neutral-900">A small, personable crew with full-service capabilities</h3>
+            <p className="mt-5 text-sm leading-7 text-neutral-600">
+              Homeowners work directly with a team that values communication, careful workmanship, and dependable service. From planning to completion, every project is handled with attention to detail and respect for your home.
+            </p>
+            <div className="mt-8 grid gap-4 sm:grid-cols-2">
+              {[
+                "Direct communication throughout the project",
+                "Thoughtful planning and careful installation",
+                "Clean, organized job sites",
+                "Results designed to hold up for years",
+              ].map((point) => (
+                <div key={point} className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-700">
+                  <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
+                  <span>{point}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="bg-neutral-100/70 px-6 py-16 text-neutral-900">
+        <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-4xl text-center">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Google Reviews</p>
+            <h2 className="mt-2 text-3xl font-bold">What homeowners are saying</h2>
+          </div>
+
+          <div className="mx-auto mt-8 max-w-4xl overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
+            <div className="p-5 md:p-6">
+              <div
+                className="elfsight-app-3c9e474f-8be7-470a-b007-3bf725c80b2d w-full min-h-[300px]"
+                data-elfsight-app-lazy
+              ></div>
+            </div>
           </div>
         </div>
       </section>
@@ -421,7 +444,9 @@ export default function HRMWebsitePreview() {
                 Serving Vernon, Ellington, Manchester, Tolland, South Windsor, Glastonbury, Rockville, and surrounding communities. Reach out today to request a free estimate and start planning your next project.
               </p>
             </div>
-            <Button className="rounded-2xl bg-amber-600 px-6 py-6 text-base font-semibold text-white hover:bg-amber-700">Request a Free Estimate</Button>
+            <Button asChild className="rounded-2xl bg-amber-600 px-6 py-6 text-base font-semibold text-white hover:bg-amber-700">
+              <a href="mailto:HRM.remodeling@gmail.com">Request a Free Estimate</a>
+            </Button>
           </div>
         </div>
       </section>
@@ -447,7 +472,7 @@ export default function HRMWebsitePreview() {
           </div>
 
           <div>
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Service Area & Surrounding Communities</div>
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Service Area</div>
             <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm text-neutral-700">
               {serviceAreas.map((area) => (
                 <div key={area} className="flex items-center gap-2">
@@ -470,13 +495,46 @@ export default function HRMWebsitePreview() {
               <div className="flex items-center gap-2 text-sm text-neutral-700">
                 <Wallet size={16} /> Financing available
               </div>
-              <button className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900">
+              <a href="mailto:HRM.remodeling@gmail.com" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900">
                 Request estimate <ChevronRight size={16} />
-              </button>
+              </a>
             </div>
           </div>
         </div>
       </footer>
+
+      {activeGallery && (
+        <div className="fixed inset-0 z-50 overflow-y-auto bg-black/85 px-4 py-6">
+          <div className="mx-auto max-w-6xl">
+            <div className="mb-6 flex items-center justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-bold text-white md:text-3xl">{activeGallery.title}</h2>
+                <p className="mt-2 max-w-3xl text-sm leading-6 text-white/70">
+                  {activeGallery.description}
+                </p>
+              </div>
+              <button
+                onClick={() => setActiveGallery(null)}
+                className="rounded-full border border-white/20 p-2 text-white transition hover:bg-white/10"
+                aria-label="Close gallery"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+              {activeGallery.images.map((img, index) => (
+                <GalleryImage
+                  key={`${activeGallery.title}-${index}`}
+                  src={img}
+                  alt={`${activeGallery.title} photo ${index + 1}`}
+                  className="h-64"
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
