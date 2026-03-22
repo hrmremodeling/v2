@@ -119,8 +119,10 @@ const projectCategories: ProjectCategory[] = [
     shortTitle: "Kitchens",
     description:
       "Browse completed kitchen remodels featuring cabinetry, countertops, backsplash tile, lighting, custom storage, and layout improvements.",
-    cover: "/images/projects/kitchens/kitchen-cover.jpg",
-    images: buildGalleryImages("kitchens", "kitchen", 30),
+    cover: "/images/projects/kitchens/kitchen-17.jpg",
+    images: Array.from({ length: 29 }, (_, i) =>
+      `/images/projects/kitchens/kitchen-${String(i + 2).padStart(2, "0")}.jpg`
+    ),
   },
   {
     title: "Bathroom Remodeling",
