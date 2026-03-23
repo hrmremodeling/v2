@@ -7,6 +7,7 @@ import {
   Bath,
   Building2,
   CheckCircle2,
+  ChevronLeft,
   ChevronRight,
   CookingPot,
   Hammer,
@@ -128,8 +129,10 @@ const projectCategories: ProjectCategory[] = [
     shortTitle: "Bathrooms",
     description:
       "See bathroom renovations with walk-in showers, tub surrounds, vanities, tilework, flooring, and clean modern finishes.",
-    cover: "/images/projects/bathrooms/bathroom-01.jpg",
-    images: buildGalleryImages("bathrooms", "bathroom", 15),
+    cover: "/images/projects/bathrooms/bathroom-04.jpg",
+    images: Array.from({ length: 27 }, (_, i) => i + 1)
+      .filter((num) => num !== 2)
+      .map((num) => `/images/projects/bathrooms/bathroom-${String(num).padStart(2, "0")}.jpg`),
   },
   {
     title: "Basement Finishing",
@@ -137,7 +140,7 @@ const projectCategories: ProjectCategory[] = [
     description:
       "Explore finished basements with open layouts, custom stairs, built-ins, storage, wet bars, laundry spaces, and flexible family living areas.",
     cover: "/images/projects/basements/basement-01.jpg",
-    images: buildGalleryImages("basements", "basement", 12),
+    images: buildGalleryImages("basements", "basement", 22),
   },
   {
     title: "Decks & Exterior",
@@ -145,7 +148,7 @@ const projectCategories: ProjectCategory[] = [
     description:
       "View deck construction and exterior improvement work built for long-term performance, clean detailing, and everyday outdoor use.",
     cover: "/images/projects/decks/deck-01.jpg",
-    images: buildGalleryImages("decks", "deck", 15),
+    images: buildGalleryImages("decks", "deck", 16),
   },
 ];
 
@@ -169,6 +172,8 @@ function GalleryImage({
 
 export default function HRMWebsitePreview() {
   const [activeGallery, setActiveGallery] = useState<ProjectCategory | null>(null);
+  const [activeZoomIndex, setActiveZoomIndex] = useState<number | null>(null);
+  const [touchStartX, setTouchStartX] = useState<number | null>(null);
 
   useEffect(() => {
     const existing = document.querySelector('script[data-elfsight="true"]');
@@ -184,6 +189,35 @@ export default function HRMWebsitePreview() {
   const kitchenGallery = projectCategories[0];
   const bathroomGallery = projectCategories[1];
   const deckGallery = projectCategories[3];
+
+  const closeGallery = () => {
+    setActiveGallery(null);
+    setActiveZoomIndex(null);
+  };
+
+  const showPrevImage = () => {
+    if (!activeGallery || activeZoomIndex === null) return;
+    setActiveZoomIndex((activeZoomIndex - 1 + activeGallery.images.length) % activeGallery.images.length);
+  };
+
+  const showNextImage = () => {
+    if (!activeGallery || activeZoomIndex === null) return;
+    setActiveZoomIndex((activeZoomIndex + 1) % activeGallery.images.length);
+  };
+
+  const handleTouchStart = (clientX: number) => {
+    setTouchStartX(clientX);
+  };
+
+  const handleTouchEnd = (clientX: number) => {
+    if (touchStartX === null) return;
+    const deltaX = clientX - touchStartX;
+    if (Math.abs(deltaX) > 50) {
+      if (deltaX > 0) showPrevImage();
+      else showNextImage();
+    }
+    setTouchStartX(null);
+  };
 
   return (
     <div className="min-h-screen bg-white text-neutral-900">
@@ -385,7 +419,10 @@ export default function HRMWebsitePreview() {
             <Card
               key={project.title}
               className="cursor-pointer overflow-hidden rounded-[1.75rem] border border-neutral-200 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
-              onClick={() => setActiveGallery(project)}
+              onClick={() => {
+                setActiveGallery(project);
+                setActiveZoomIndex(null);
+              }}
             >
               <GalleryImage src={project.cover} alt={project.title} className="h-64 rounded-none" />
               <CardContent className="p-6">
@@ -618,7 +655,7 @@ export default function HRMWebsitePreview() {
                 </p>
               </div>
               <button
-                onClick={() => setActiveGallery(null)}
+                onClick={closeGallery}
                 className="rounded-full border border-white/20 p-2 text-white transition hover:bg-white/10"
                 aria-label="Close gallery"
               >
@@ -626,15 +663,73 @@ export default function HRMWebsitePreview() {
               </button>
             </div>
 
+            <div className="mb-4 text-sm text-white/70">Tap any photo to enlarge. Swipe left or right on mobile while zoomed in.</div>
+
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {activeGallery.images.map((img, index) => (
-                <GalleryImage
+                <button
                   key={`${activeGallery.title}-${index}`}
-                  src={img}
-                  alt={`${activeGallery.title} photo ${index + 1}`}
-                  className="h-64"
-                />
+                  type="button"
+                  onClick={() => setActiveZoomIndex(index)}
+                  className="text-left"
+                >
+                  <GalleryImage
+                    src={img}
+                    alt={`${activeGallery.title} photo ${index + 1}`}
+                    className="h-64 transition hover:opacity-95"
+                  />
+                </button>
               ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {activeGallery && activeZoomIndex !== null && (
+        <div
+          className="fixed inset-0 z-[60] bg-black/95 px-4 py-4"
+          onTouchStart={(e) => handleTouchStart(e.touches[0].clientX)}
+          onTouchEnd={(e) => handleTouchEnd(e.changedTouches[0].clientX)}
+        >
+          <div className="mx-auto flex h-full max-w-7xl flex-col">
+            <div className="mb-4 flex items-center justify-between gap-4 text-white">
+              <div className="text-sm text-white/75">
+                {activeGallery.title} · Photo {activeZoomIndex + 1} of {activeGallery.images.length}
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveZoomIndex(null)}
+                className="rounded-full border border-white/20 p-2 text-white transition hover:bg-white/10"
+                aria-label="Close zoomed image"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="relative flex flex-1 items-center justify-center">
+              <button
+                type="button"
+                onClick={showPrevImage}
+                className="absolute left-2 z-10 rounded-full border border-white/20 bg-black/40 p-3 text-white transition hover:bg-white/10"
+                aria-label="Previous image"
+              >
+                <ChevronLeft className="h-5 w-5" />
+              </button>
+
+              <img
+                src={activeGallery.images[activeZoomIndex]}
+                alt={`${activeGallery.title} zoomed photo ${activeZoomIndex + 1}`}
+                className="max-h-[82vh] w-auto max-w-full rounded-2xl object-contain"
+              />
+
+              <button
+                type="button"
+                onClick={showNextImage}
+                className="absolute right-2 z-10 rounded-full border border-white/20 bg-black/40 p-3 text-white transition hover:bg-white/10"
+                aria-label="Next image"
+              >
+                <ChevronRight className="h-5 w-5" />
+              </button>
             </div>
           </div>
         </div>
