@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
   Bath,
@@ -64,7 +63,7 @@ const services = [
     title: "Windows & Doors",
     text: "Professional installation of energy-efficient windows and durable exterior doors to improve comfort, security, and the appearance of your home.",
   },
-];
+] as const;
 
 const highlights = [
   "25+ Years Experience",
@@ -73,7 +72,7 @@ const highlights = [
   "Full-Service Contractor",
   "Free Estimates",
   "Financing Available",
-];
+] as const;
 
 const whyChoose = [
   "Small, personable crew with direct communication",
@@ -82,7 +81,7 @@ const whyChoose = [
   "Clean, organized job sites that respect your home",
   "Real projects from local homes",
   "Dependable scheduling and clear communication",
-];
+] as const;
 
 const serviceAreas = [
   "Vernon",
@@ -92,7 +91,7 @@ const serviceAreas = [
   "South Windsor",
   "Glastonbury",
   "Rockville",
-];
+] as const;
 
 const kitchenFeatures = [
   "Cabinet installation",
@@ -102,7 +101,7 @@ const kitchenFeatures = [
   "Layout improvements",
   "Wall removal for more open living space",
   "Lighting upgrades",
-];
+] as const;
 
 const bathFeatures = [
   "Tub to shower conversions",
@@ -111,7 +110,7 @@ const bathFeatures = [
   "Updated fixtures",
   "Waterproof wall systems",
   "Faster turnaround",
-];
+] as const;
 
 const projectCategories: ProjectCategory[] = [
   {
@@ -150,12 +149,20 @@ const projectCategories: ProjectCategory[] = [
   },
 ];
 
-function GalleryImage({ src, alt, className = "" }: { src: string; alt: string; className?: string }) {
+function GalleryImage({
+  src,
+  alt,
+  className = "",
+}: {
+  src: string;
+  alt: string;
+  className?: string;
+}) {
   return (
     <img
       src={src}
       alt={alt}
-      className={`h-full w-full rounded-[1.5rem] object-cover bg-neutral-100 ${className}`}
+      className={`h-full w-full rounded-[1.5rem] bg-neutral-100 object-cover ${className}`}
     />
   );
 }
@@ -176,7 +183,6 @@ export default function HRMWebsitePreview() {
 
   const kitchenGallery = projectCategories[0];
   const bathroomGallery = projectCategories[1];
-  const basementGallery = projectCategories[2];
   const deckGallery = projectCategories[3];
 
   return (
@@ -188,10 +194,18 @@ export default function HRMWebsitePreview() {
             <div className="text-sm text-neutral-500">Vernon, CT</div>
           </div>
           <nav className="hidden items-center gap-6 text-sm md:flex">
-            <a href="#services" className="hover:text-black">Services</a>
-            <a href="#projects" className="hover:text-black">Projects</a>
-            <a href="#about" className="hover:text-black">About</a>
-            <a href="#contact" className="hover:text-black">Contact</a>
+            <a href="#services" className="hover:text-black">
+              Services
+            </a>
+            <a href="#projects" className="hover:text-black">
+              Projects
+            </a>
+            <a href="#about" className="hover:text-black">
+              About
+            </a>
+            <a href="#contact" className="hover:text-black">
+              Contact
+            </a>
           </nav>
         </div>
       </header>
@@ -212,10 +226,16 @@ export default function HRMWebsitePreview() {
               We handle kitchen remodeling, bathroom renovations, basement finishing, deck construction, and window and door installation. Financing options are available to help make your project more manageable.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
-              <a href="#contact" className="inline-flex rounded-xl bg-amber-600 px-6 py-5 text-base font-semibold text-white hover:bg-amber-700">
+              <a
+                href="#contact"
+                className="inline-flex rounded-xl bg-amber-600 px-6 py-5 text-base font-semibold text-white hover:bg-amber-700"
+              >
                 Request a Free Estimate
               </a>
-              <a href="#projects" className="inline-flex rounded-xl border border-white/70 bg-transparent px-6 py-5 text-base font-semibold text-white hover:bg-white/10">
+              <a
+                href="#projects"
+                className="inline-flex rounded-xl border border-white/70 bg-transparent px-6 py-5 text-base font-semibold text-white hover:bg-white/10"
+              >
                 View Our Projects
               </a>
             </div>
@@ -223,14 +243,26 @@ export default function HRMWebsitePreview() {
 
           <div className="grid gap-4 sm:grid-cols-2">
             <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5">
-              <GalleryImage src={kitchenGallery.cover} alt="Featured kitchen remodeling project" className="min-h-[340px] rounded-none" />
+              <GalleryImage
+                src={kitchenGallery.cover}
+                alt="Featured kitchen remodeling project"
+                className="min-h-[340px] rounded-none"
+              />
             </div>
             <div className="grid gap-4">
               <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5">
-                <GalleryImage src={bathroomGallery.cover} alt="Featured bathroom remodeling project" className="min-h-[162px] rounded-none" />
+                <GalleryImage
+                  src={bathroomGallery.cover}
+                  alt="Featured bathroom remodeling project"
+                  className="min-h-[162px] rounded-none"
+                />
               </div>
               <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5">
-                <GalleryImage src={deckGallery.cover} alt="Featured deck project" className="min-h-[162px] rounded-none" />
+                <GalleryImage
+                  src={deckGallery.cover}
+                  alt="Featured deck project"
+                  className="min-h-[162px] rounded-none"
+                />
               </div>
             </div>
           </div>
@@ -240,7 +272,10 @@ export default function HRMWebsitePreview() {
       <section className="mx-auto max-w-7xl px-6 py-8">
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
           {highlights.map((item) => (
-            <div key={item} className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-4 text-center text-sm font-semibold text-neutral-800">
+            <div
+              key={item}
+              className="rounded-2xl border border-neutral-200 bg-neutral-50 px-4 py-4 text-center text-sm font-semibold text-neutral-800"
+            >
               {item}
             </div>
           ))}
@@ -249,7 +284,9 @@ export default function HRMWebsitePreview() {
 
       <section id="services" className="mx-auto max-w-7xl px-6 py-16">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Services</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+            Services
+          </p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
             Your Trusted Partner for All Your Remodeling Needs
           </h2>
@@ -280,14 +317,21 @@ export default function HRMWebsitePreview() {
         <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-2">
           <Card className="rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
             <CardContent className="p-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Custom Kitchen Remodeling</p>
-              <h2 className="mt-3 text-3xl font-bold text-neutral-900">High-value kitchens built for everyday life</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+                Custom Kitchen Remodeling
+              </p>
+              <h2 className="mt-3 text-3xl font-bold text-neutral-900">
+                High-value kitchens built for everyday life
+              </h2>
               <p className="mt-4 text-sm leading-7 text-neutral-600">
                 We focus on kitchens that improve how your home functions every day, with better storage, better workflow, open-concept possibilities like wall removal, and finishes that hold up beautifully over time.
               </p>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {kitchenFeatures.map((item) => (
-                  <div key={item} className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
+                  <div
+                    key={item}
+                    className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700"
+                  >
                     <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
                     <span>{item}</span>
                   </div>
@@ -296,16 +340,23 @@ export default function HRMWebsitePreview() {
             </CardContent>
           </Card>
 
-          <Card className="rounded-[2rem] border-0 bg-white shadow-sm">
+          <Card className="rounded-[2rem] bg-white shadow-sm">
             <CardContent className="p-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Affordable Bathroom Upgrades</p>
-              <h2 className="mt-3 text-3xl font-bold">Fast, clean improvements without cutting corners</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+                Affordable Bathroom Upgrades
+              </p>
+              <h2 className="mt-3 text-3xl font-bold">
+                Fast, clean improvements without cutting corners
+              </h2>
               <p className="mt-4 text-sm leading-7 text-neutral-600">
                 Not every bathroom needs a full renovation. We also offer efficient upgrades for homeowners who want a meaningful improvement without an extended construction timeline.
               </p>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {bathFeatures.map((item) => (
-                  <div key={item} className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
+                  <div
+                    key={item}
+                    className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700"
+                  >
                     <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
                     <span>{item}</span>
                   </div>
@@ -318,8 +369,12 @@ export default function HRMWebsitePreview() {
 
       <section id="projects" className="mx-auto max-w-7xl px-6 py-16">
         <div className="mx-auto max-w-3xl text-center">
-          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Featured Work</p>
-          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Recent Remodeling Projects</h2>
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+            Featured Work
+          </p>
+          <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
+            Recent Remodeling Projects
+          </h2>
           <p className="mt-4 text-neutral-600">
             Browse kitchens, bathrooms, basements, and decks from real projects. Click any category to open the gallery.
           </p>
@@ -334,7 +389,9 @@ export default function HRMWebsitePreview() {
             >
               <GalleryImage src={project.cover} alt={project.title} className="h-64 rounded-none" />
               <CardContent className="p-6">
-                <Badge variant="secondary" className="rounded-full">High-Value Projects</Badge>
+                <Badge variant="secondary" className="rounded-full">
+                  High-Value Projects
+                </Badge>
                 <h3 className="mt-4 text-xl font-semibold">{project.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-neutral-600">{project.description}</p>
                 <button className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900">
@@ -350,14 +407,21 @@ export default function HRMWebsitePreview() {
         <div className="mx-auto max-w-7xl">
           <Card className="rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
             <CardContent className="p-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">About HRM</p>
-              <h2 className="mt-3 text-3xl font-bold">A local company built on honesty, integrity, and craftsmanship</h2>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+                About HRM
+              </p>
+              <h2 className="mt-3 text-3xl font-bold">
+                A local company built on honesty, integrity, and craftsmanship
+              </h2>
               <p className="mt-4 text-sm leading-7 text-neutral-600">
                 With over 25 years of experience in residential remodeling, HRM Building &amp; Remodeling LLC has earned a reputation for doing the job the right way, with careful workmanship, direct communication, and a small crew homeowners can feel comfortable working with.
               </p>
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
                 {whyChoose.map((item) => (
-                  <div key={item} className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
+                  <div
+                    key={item}
+                    className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700"
+                  >
                     <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
                     <span>{item}</span>
                   </div>
@@ -371,8 +435,12 @@ export default function HRMWebsitePreview() {
       <section className="mx-auto max-w-7xl px-6 py-16">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Why Our Projects Stand Out</p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">Why Homeowners Choose HRM</h2>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+              Why Our Projects Stand Out
+            </p>
+            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
+              Why Homeowners Choose HRM
+            </h2>
             <p className="mt-5 text-sm leading-7 text-neutral-600">
               Every project we take on is built with the goal of creating a space that works better for your family and lasts for years. We focus on thoughtful design, careful installation, and clear communication so homeowners feel confident from start to finish.
             </p>
@@ -385,7 +453,10 @@ export default function HRMWebsitePreview() {
                 "Clear communication and dependable scheduling",
                 "Designs focused on function, durability, and long-term home value",
               ].map((point) => (
-                <div key={point} className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700">
+                <div
+                  key={point}
+                  className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700"
+                >
                   <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
                   <span>{point}</span>
                 </div>
@@ -394,8 +465,12 @@ export default function HRMWebsitePreview() {
           </div>
 
           <div className="rounded-[2rem] border border-neutral-200 bg-neutral-50 p-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Honesty • Integrity • Quality Craftsmanship</p>
-            <h3 className="mt-3 text-3xl font-bold text-neutral-900">A small, personable crew with full-service capabilities</h3>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+              Honesty • Integrity • Quality Craftsmanship
+            </p>
+            <h3 className="mt-3 text-3xl font-bold text-neutral-900">
+              A small, personable crew with full-service capabilities
+            </h3>
             <p className="mt-5 text-sm leading-7 text-neutral-600">
               Homeowners work directly with a team that values communication, careful workmanship, and dependable service. From planning to completion, every project is handled with attention to detail and respect for your home.
             </p>
@@ -406,7 +481,10 @@ export default function HRMWebsitePreview() {
                 "Clean, organized job sites",
                 "Results designed to hold up for years",
               ].map((point) => (
-                <div key={point} className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-700">
+                <div
+                  key={point}
+                  className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-700"
+                >
                   <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
                   <span>{point}</span>
                 </div>
@@ -419,16 +497,18 @@ export default function HRMWebsitePreview() {
       <section className="bg-neutral-100/70 px-6 py-16 text-neutral-900">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Google Reviews</p>
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+              Google Reviews
+            </p>
             <h2 className="mt-2 text-3xl font-bold">What homeowners are saying</h2>
           </div>
 
           <div className="mx-auto mt-8 max-w-4xl overflow-hidden rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
             <div className="p-5 md:p-6">
               <div
-                className="elfsight-app-3c9e474f-8be7-470a-b007-3bf725c80b2d w-full min-h-[300px]"
+                className="elfsight-app-3c9e474f-8be7-470a-b007-3bf725c80b2d min-h-[300px] w-full"
                 data-elfsight-app-lazy
-              ></div>
+              />
             </div>
           </div>
         </div>
@@ -438,7 +518,9 @@ export default function HRMWebsitePreview() {
         <div className="mx-auto max-w-7xl rounded-[2rem] border border-neutral-200 bg-neutral-50 p-8 md:p-10">
           <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-center">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Start Your Remodeling Project</p>
+              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+                Start Your Remodeling Project
+              </p>
               <h2 className="mt-3 text-3xl font-bold md:text-4xl">
                 Planning a project for your home? It&apos;s never too soon to start gathering information.
               </h2>
@@ -446,7 +528,10 @@ export default function HRMWebsitePreview() {
                 Serving Vernon, Ellington, Manchester, Tolland, South Windsor, Glastonbury, Rockville, and surrounding communities. Reach out today to request a free estimate and start planning your next project.
               </p>
             </div>
-            <a href="mailto:HRM.remodeling@gmail.com" className="inline-flex rounded-2xl bg-amber-600 px-6 py-6 text-base font-semibold text-white hover:bg-amber-700">
+            <a
+              href="mailto:HRM.remodeling@gmail.com"
+              className="inline-flex rounded-2xl bg-amber-600 px-6 py-6 text-base font-semibold text-white hover:bg-amber-700"
+            >
               Request a Free Estimate
             </a>
           </div>
@@ -463,7 +548,9 @@ export default function HRMWebsitePreview() {
           </div>
 
           <div>
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Service Focus</div>
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+              Service Focus
+            </div>
             <ul className="mt-4 space-y-2 text-sm text-neutral-700">
               <li>Kitchen Remodeling</li>
               <li>Bathroom Renovation</li>
@@ -474,7 +561,9 @@ export default function HRMWebsitePreview() {
           </div>
 
           <div>
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Service Area</div>
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+              Service Area
+            </div>
             <div className="mt-4 grid grid-cols-2 gap-y-2 text-sm text-neutral-700">
               {serviceAreas.map((area) => (
                 <div key={area} className="flex items-center gap-2">
@@ -485,19 +574,32 @@ export default function HRMWebsitePreview() {
           </div>
 
           <div>
-            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">Contact</div>
-            <div className="mt-2 text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">CT HIC #0654884</div>
+            <div className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+              Contact
+            </div>
+            <div className="mt-2 text-xs font-medium uppercase tracking-[0.2em] text-neutral-500">
+              CT HIC #0654884
+            </div>
             <div className="mt-4 space-y-3 text-sm text-neutral-700">
               <div className="flex items-center gap-2">
-                <Phone size={16} /> <a href="tel:8605974872" className="hover:underline">860-597-4872</a>
+                <Phone size={16} />
+                <a href="tel:8605974872" className="hover:underline">
+                  860-597-4872
+                </a>
               </div>
               <div className="flex items-center gap-2">
-                <Mail size={16} /> <a href="mailto:HRM.remodeling@gmail.com" className="hover:underline">HRM.remodeling@gmail.com</a>
+                <Mail size={16} />
+                <a href="mailto:HRM.remodeling@gmail.com" className="hover:underline">
+                  HRM.remodeling@gmail.com
+                </a>
               </div>
               <div className="flex items-center gap-2 text-sm text-neutral-700">
                 <Wallet size={16} /> Financing available
               </div>
-              <a href="mailto:HRM.remodeling@gmail.com" className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900">
+              <a
+                href="mailto:HRM.remodeling@gmail.com"
+                className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900"
+              >
                 Request estimate <ChevronRight size={16} />
               </a>
             </div>
