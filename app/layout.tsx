@@ -3,11 +3,9 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.hrm-br.com"),
-
   title: "HRM Building & Remodeling LLC",
   description:
     "Kitchen, bathroom, basement, deck, window, and door remodeling in Vernon, CT and surrounding communities.",
-
   openGraph: {
     title: "HRM Building & Remodeling LLC",
     description:
@@ -16,7 +14,7 @@ export const metadata: Metadata = {
     siteName: "HRM Building & Remodeling LLC",
     images: [
       {
-        url: "/opengraph-image.jpg", // THIS is what fixes your error
+        url: "/opengraph-image.jpg",
         width: 1200,
         height: 630,
         alt: "HRM Building & Remodeling LLC",
@@ -25,7 +23,6 @@ export const metadata: Metadata = {
     locale: "en_US",
     type: "website",
   },
-
   twitter: {
     card: "summary_large_image",
     title: "HRM Building & Remodeling LLC",
