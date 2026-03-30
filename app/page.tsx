@@ -244,19 +244,27 @@ export default function HRMWebsitePreview() {
         </div>
       </header>
 
-      <section className="border-b border-neutral-200 bg-neutral-950 text-white">
-        <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 lg:grid-cols-[1.05fr_0.95fr] lg:py-20">
-          <div className="flex flex-col justify-center">
-            <div className="mb-5 inline-flex w-fit items-center rounded-full border border-white/15 bg-white/5 px-4 py-2 text-sm text-white/90">
+      <section className="border-b border-neutral-200 bg-white">
+        <div className="w-full">
+          <img
+            src="/opengraph-image.jpg"
+            alt="Featured remodeling project"
+            className="h-[320px] w-full object-cover md:h-[420px] lg:h-[520px]"
+          />
+        </div>
+
+        <div className="mx-auto max-w-7xl px-6 py-12 lg:py-16">
+          <div className="max-w-3xl">
+            <div className="mb-5 inline-flex w-fit items-center rounded-full border border-neutral-200 bg-neutral-50 px-4 py-2 text-sm text-neutral-700">
               Honesty • Integrity • Quality Craftsmanship
             </div>
-            <h1 className="max-w-3xl text-5xl font-bold tracking-tight md:text-6xl">
+            <h1 className="text-4xl font-bold tracking-tight md:text-5xl">
               Kitchen, Bathroom, Basement &amp; Deck Specialists in Vernon, CT
             </h1>
-            <p className="mt-6 max-w-3xl text-lg leading-8 text-white/85">
+            <p className="mt-6 text-base leading-7 text-neutral-700 md:text-lg md:leading-8">
               HRM Building &amp; Remodeling LLC serves homeowners throughout the Vernon area with over 25 years of experience delivering careful workmanship, clear communication, and beautiful, lasting results.
             </p>
-            <p className="mt-4 max-w-3xl text-base leading-7 text-white/75">
+            <p className="mt-4 text-sm leading-6 text-neutral-600 md:text-base md:leading-7">
               We handle kitchen remodeling, bathroom renovations, basement finishing, deck construction, and window and door installation. Financing options are available to help make your project more manageable.
             </p>
             <div className="mt-8 flex flex-wrap gap-4">
@@ -268,36 +276,10 @@ export default function HRMWebsitePreview() {
               </a>
               <a
                 href="#projects"
-                className="inline-flex rounded-xl border border-white/70 bg-transparent px-6 py-5 text-base font-semibold text-white hover:bg-white/10"
+                className="inline-flex rounded-xl border border-neutral-300 bg-white px-6 py-5 text-base font-semibold text-neutral-900 hover:bg-neutral-50"
               >
                 View Our Projects
               </a>
-            </div>
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5">
-              <GalleryImage
-                src={kitchenGallery.cover}
-                alt="Featured kitchen remodeling project"
-                className="min-h-[340px] rounded-none"
-              />
-            </div>
-            <div className="grid gap-4">
-              <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5">
-                <GalleryImage
-                  src={bathroomGallery.cover}
-                  alt="Featured bathroom remodeling project"
-                  className="min-h-[162px] rounded-none"
-                />
-              </div>
-              <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5">
-                <GalleryImage
-                  src={deckGallery.cover}
-                  alt="Featured deck project"
-                  className="min-h-[162px] rounded-none"
-                />
-              </div>
             </div>
           </div>
         </div>
