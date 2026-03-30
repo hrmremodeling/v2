@@ -1,11 +1,15 @@
 import "./globals.css";
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.hrm-br.com"),
-  title: "HRM Building & Remodeling LLC",
+  title: "HRM Building & Remodeling LLC | Vernon, CT Remodeling Contractor",
   description:
     "Kitchen, bathroom, basement, deck, window, and door remodeling in Vernon, CT and surrounding communities.",
+  icons: {
+    icon: "/favicon.ico",
+  },
   openGraph: {
     title: "HRM Building & Remodeling LLC",
     description:
@@ -34,9 +38,9 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{
+  children: ReactNode;
+}>) {
   return (
     <html lang="en">
       <body>{children}</body>

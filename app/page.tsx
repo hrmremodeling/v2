@@ -186,10 +186,6 @@ export default function HRMWebsitePreview() {
     document.body.appendChild(script);
   }, []);
 
-  const kitchenGallery = projectCategories[0];
-  const bathroomGallery = projectCategories[1];
-  const deckGallery = projectCategories[3];
-
   const closeGallery = () => {
     setActiveGallery(null);
     setActiveZoomIndex(null);
@@ -221,23 +217,22 @@ export default function HRMWebsitePreview() {
 
   return (
     <div className="min-h-screen bg-white text-neutral-900">
-      <header className="sticky top-0 z-50 border-b border-neutral-200 bg-white/95 backdrop-blur">
-        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
-          <div>
-            <div className="text-lg font-bold tracking-tight">HRM Building & Remodeling LLC</div>
-            <div className="text-sm text-neutral-500">Vernon, CT</div>
-          </div>
-          <nav className="hidden items-center gap-6 text-sm md:flex">
-            <a href="#services" className="hover:text-black">
+      <header className="fixed top-0 z-50 w-full bg-transparent">
+        <div className="mx-auto flex max-w-7xl items-center justify-end px-6 py-5">
+          <nav className="hidden items-center gap-6 text-sm font-semibold text-neutral-900 md:flex">
+            <a href="#services" className="transition hover:text-neutral-600">
               Services
             </a>
-            <a href="#projects" className="hover:text-black">
+            <a href="#projects" className="transition hover:text-neutral-600">
               Projects
             </a>
-            <a href="#about" className="hover:text-black">
+            <a href="#reviews" className="transition hover:text-neutral-600">
+              Reviews
+            </a>
+            <a href="#about" className="transition hover:text-neutral-600">
               About
             </a>
-            <a href="#contact" className="hover:text-black">
+            <a href="#contact" className="transition hover:text-neutral-600">
               Contact
             </a>
           </nav>
@@ -249,7 +244,7 @@ export default function HRMWebsitePreview() {
           <img
             src="/opengraph-image.jpg"
             alt="Featured remodeling project"
-            className="h-[320px] w-full object-cover md:h-[420px] lg:h-[520px]"
+            className="h-[420px] w-full object-cover md:h-[520px] lg:h-[650px]"
           />
         </div>
 
@@ -513,7 +508,7 @@ export default function HRMWebsitePreview() {
         </div>
       </section>
 
-      <section className="bg-neutral-100/70 px-6 py-16 text-neutral-900">
+      <section id="reviews" className="bg-neutral-100/70 px-6 py-16 text-neutral-900">
         <div className="mx-auto max-w-7xl">
           <div className="mx-auto max-w-4xl text-center">
             <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
@@ -645,7 +640,9 @@ export default function HRMWebsitePreview() {
               </button>
             </div>
 
-            <div className="mb-4 text-sm text-white/70">Tap any photo to enlarge. Swipe left or right on mobile while zoomed in.</div>
+            <div className="mb-4 text-sm text-white/70">
+              Tap any photo to enlarge. Swipe left or right on mobile while zoomed in.
+            </div>
 
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {activeGallery.images.map((img, index) => (
