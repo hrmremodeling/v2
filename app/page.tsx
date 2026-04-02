@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import {
   Bath,
   Building2,
@@ -384,35 +383,63 @@ export default function HRMWebsitePreview() {
             Featured Work
           </p>
           <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
-            Recent Remodeling Projects
+            Explore Our Photo Galleries
           </h2>
           <p className="mt-4 text-neutral-600">
-            Browse kitchens, bathrooms, basements, and decks from real projects. Click any category to open the gallery.
+            Tap any gallery to browse more project photos from real kitchens, bathrooms, basements, and decks.
           </p>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+        <div className="mt-12 grid gap-6 sm:grid-cols-2 xl:grid-cols-4">
           {projectCategories.map((project) => (
-            <Card
+            <button
               key={project.title}
-              className="cursor-pointer overflow-hidden rounded-[1.75rem] border border-neutral-200 shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
+              type="button"
               onClick={() => {
                 setActiveGallery(project);
                 setActiveZoomIndex(null);
               }}
+              className="group overflow-hidden rounded-[1.75rem] border border-neutral-200 bg-white text-left shadow-sm transition hover:-translate-y-1 hover:shadow-lg"
             >
-              <GalleryImage src={project.cover} alt={project.title} className="h-64 rounded-none" />
-              <CardContent className="p-6">
-                <Badge variant="secondary" className="rounded-full">
-                  High-Value Projects
-                </Badge>
-                <h3 className="mt-4 text-xl font-semibold">{project.title}</h3>
-                <p className="mt-3 text-sm leading-6 text-neutral-600">{project.description}</p>
-                <button className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-neutral-900">
-                  Open gallery <ChevronRight size={16} />
-                </button>
-              </CardContent>
-            </Card>
+              <div className="relative">
+                <img
+                  src={project.cover}
+                  alt={project.title}
+                  className="h-72 w-full object-cover transition duration-300 group-hover:scale-[1.03]"
+                />
+
+                <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
+
+                <div className="absolute left-4 top-4">
+                  <div className="inline-flex items-center rounded-full bg-black/65 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur-sm">
+                    {project.images.length} Photos
+                  </div>
+                </div>
+
+                <div className="absolute inset-x-0 bottom-0 p-4">
+                  <div className="flex items-end justify-between gap-3">
+                    <div>
+                      <h3 className="text-xl font-semibold text-white">
+                        {project.shortTitle}
+                      </h3>
+                      <p className="mt-1 text-sm text-white/85">
+                        Tap to open gallery
+                      </p>
+                    </div>
+
+                    <div className="inline-flex shrink-0 items-center rounded-full bg-white px-3 py-2 text-sm font-semibold text-neutral-900 shadow-sm">
+                      View Gallery
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-5">
+                <p className="text-sm leading-6 text-neutral-600">
+                  {project.description}
+                </p>
+              </div>
+            </button>
           ))}
         </div>
       </section>
