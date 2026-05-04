@@ -75,12 +75,13 @@ const highlights = [
 ] as const;
 
 const whyChoose = [
+  "25+ years of hands-on residential remodeling experience",
   "Small, personable crew with direct communication",
   "Full-service contractor from planning to completion",
   "Careful craftsmanship and attention to detail",
   "Clean, organized job sites that respect your home",
-  "Real projects from local homes",
   "Dependable scheduling and clear communication",
+  "Projects focused on function, durability, and long-term value",
 ] as const;
 
 const serviceAreas = [
@@ -446,91 +447,48 @@ export default function HRMWebsitePreview() {
 
       <section id="about" className="bg-neutral-100/70 px-6 py-16">
         <div className="mx-auto max-w-7xl">
-          <Card className="rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
-            <CardContent className="p-8">
-              <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
-                About HRM
-              </p>
-              <h2 className="mt-3 text-3xl font-bold">
-                A local company built on honesty, integrity, and craftsmanship
-              </h2>
-              <p className="mt-4 text-sm leading-7 text-neutral-600">
-                With over 25 years of experience in residential remodeling, HRM Building &amp; Remodeling LLC has earned a reputation for doing the job the right way, with careful workmanship, direct communication, and a small crew homeowners can feel comfortable working with.
-              </p>
-              <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                {whyChoose.map((item) => (
-                  <div
-                    key={item}
-                    className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700"
-                  >
-                    <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
-                    <span>{item}</span>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </section>
-
-      <section className="mx-auto max-w-7xl px-6 py-16">
-        <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
-              Why Our Projects Stand Out
-            </p>
-            <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-5xl">
-              Why Homeowners Choose HRM
-            </h2>
-            <p className="mt-5 text-sm leading-7 text-neutral-600">
-              Every project we take on is built with the goal of creating a space that works better for your family and lasts for years. We focus on thoughtful design, careful installation, and clear communication so homeowners feel confident from start to finish.
-            </p>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {[
-                "Over 25 years of hands-on residential remodeling experience",
-                "Small, personable crew that homeowners work with directly",
-                "Full-service contractor handling projects from start to finish",
-                "Projects built with careful craftsmanship and attention to detail",
-                "Clear communication and dependable scheduling",
-                "Designs focused on function, durability, and long-term home value",
-              ].map((point) => (
-                <div
-                  key={point}
-                  className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700"
-                >
-                  <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
-                  <span>{point}</span>
+          <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+            <Card className="rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
+              <CardContent className="p-8">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+                  About HRM
+                </p>
+                <h2 className="mt-3 text-3xl font-bold tracking-tight md:text-4xl">
+                  A local remodeling company built on honesty, integrity, and craftsmanship
+                </h2>
+                <div className="mt-5 space-y-4 text-sm leading-7 text-neutral-600 md:text-base md:leading-8">
+                  <p>
+                    HRM Building &amp; Remodeling LLC is a local remodeling company serving Vernon, CT and surrounding towns. With over 25 years of hands-on residential remodeling experience, we focus on doing the job the right way through careful workmanship, clear communication, and dependable service.
+                  </p>
+                  <p>
+                    Homeowners work directly with a small, personable crew from planning to completion. Every project is handled with attention to detail, respect for your home, and a focus on results that are built to last.
+                  </p>
                 </div>
-              ))}
-            </div>
-          </div>
+              </CardContent>
+            </Card>
 
-          <div className="rounded-[2rem] border border-neutral-200 bg-neutral-50 p-8">
-            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
-              Honesty • Integrity • Quality Craftsmanship
-            </p>
-            <h3 className="mt-3 text-3xl font-bold text-neutral-900">
-              A small, personable crew with full-service capabilities
-            </h3>
-            <p className="mt-5 text-sm leading-7 text-neutral-600">
-              Homeowners work directly with a team that values communication, careful workmanship, and dependable service. From planning to completion, every project is handled with attention to detail and respect for your home.
-            </p>
-            <div className="mt-8 grid gap-4 sm:grid-cols-2">
-              {[
-                "Direct communication throughout the project",
-                "Thoughtful planning and careful installation",
-                "Clean, organized job sites",
-                "Results designed to hold up for years",
-              ].map((point) => (
-                <div
-                  key={point}
-                  className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-white px-4 py-3 text-sm text-neutral-700"
-                >
-                  <CheckCircle2 size={18} className="mt-0.5 shrink-0" />
-                  <span>{point}</span>
+            <Card className="rounded-[2rem] border border-neutral-200 bg-white shadow-sm">
+              <CardContent className="p-8">
+                <p className="text-sm font-semibold uppercase tracking-[0.2em] text-neutral-500">
+                  Why Homeowners Choose HRM
+                </p>
+                <h3 className="mt-3 text-2xl font-bold text-neutral-900">
+                  Dependable remodeling with direct communication
+                </h3>
+
+                <div className="mt-6 grid gap-3">
+                  {whyChoose.map((item) => (
+                    <div
+                      key={item}
+                      className="flex items-start gap-3 rounded-xl border border-neutral-200 bg-neutral-50 px-4 py-3 text-sm text-neutral-700"
+                    >
+                      <CheckCircle2 size={16} className="mt-0.5 shrink-0" />
+                      <span>{item}</span>
+                    </div>
+                  ))}
                 </div>
-              ))}
-            </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
